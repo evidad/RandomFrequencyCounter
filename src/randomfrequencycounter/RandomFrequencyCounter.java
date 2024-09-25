@@ -14,9 +14,6 @@ import java.util.stream.IntStream;
  */
 public class RandomFrequencyCounter {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
 
         SecureRandom randomNumbers = new SecureRandom();

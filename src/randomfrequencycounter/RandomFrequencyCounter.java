@@ -5,34 +5,27 @@
 package randomfrequencycounter;
 
 import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.stream.IntStream;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-/**
- *
- * @author errol
- */
 public class RandomFrequencyCounter {
 
     public static void main(String[] args) {
 
         SecureRandom randomNumbers = new SecureRandom();
-
         int[] dataSet = {100, 1000, 100000, 1000000};
 
         for (int size : dataSet) {
             System.out.println("Data set size: " + size);
-            Integer[] randomArray = randomNumbers.ints(size, 1, 11)
+            System.out.printf("%-10s%-10s%n", "Number", "Frequency");
+
+            randomNumbers.ints(size, 1, 11)
                     .boxed()
-                    .toArray(Integer[]::new);
-
-            IntStream.rangeClosed(1, 10).forEach(num -> {
-                long count = Arrays.stream(randomArray)
-                        .filter(value -> value == num)
-                        .count();
-
-                System.out.println("Frequency of " + num + ": " + count);
-            });
+                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                    .forEach((number, frequency) -> System.out.printf("%-10d%-10d%n", number, frequency));
+            
+            System.out.println();
         }
     }
 }
+
